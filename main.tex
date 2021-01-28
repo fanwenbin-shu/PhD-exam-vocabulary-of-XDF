@@ -1,0 +1,564 @@
+% !TEX program = xelatex
+% !TEX encoding = UTF-8
+\documentclass[a4paper]{book}
+% "C:\Program Files\WinEdt Team\WinEdt 10\WinEdt.exe" -C="WinEdt 10.3" "[Open(|%f|);SelPar(%l,8);]"
+
+% % Greek font
+% \usepackage[T2A,T1]{fontenc}
+% \usepackage[utf8]{inputenc}
+\usepackage[greek,english]{babel}
+
+
+\usepackage{ctex}
+\punctstyle{kaiming}
+\setCJKmainfont[BoldFont=FZHei-B01, ItalicFont=FZKai-Z03
+% FZNewKai-Z03
+]{FZShuSong-Z01}
+\usepackage{multicol}
+\setmainfont{Times New Roman}
+% Page Margin
+\usepackage[% inner = 1in, outer = 1.5in % for my default book
+    inner=1in,
+    outer=1.5in,
+    bottom=1.5in,
+]{geometry}
+
+% Pronunciation
+\usepackage{tipa}
+\newcommand\yb[1]{\mbox{\upshape{\textipa{[#1]}}}}
+\usepackage{ifxetex}
+\ifxetex
+  \usepackage{substitutefont}
+  \substitutefont{T3}{\rmdefault}{cmr}
+\fi
+% https://tex.stackexchange.com/questions/464082/xelatex-font-shape-t3-lmr-m-n-undefinedfont-using-t3-cmr-m-n-insteadfont/464087
+\usepackage{lmodern}
+% https://tex.stackexchange.com/questions/58087/how-to-remove-the-warnings-font-shape-ot1-cmss-m-n-in-size-4-not-available
+\usepackage{anyfontsize} % Font size will probably be problem
+
+% % % Times Font (All were invalid. )
+% \usepackage{newtxtext}
+% % \usepackage{times}
+% % \usepackage[mtbold,mtpluscal,mtplusscr]{mathtime}
+
+% \usepackage[no-math]{fontspec}
+% \setmainfont[Ligatures={Required,Common,Contextual,Rare,Historic,TeX},Numbers=OldStyle,RawFeature={+ss05,+dlig,+hlig,+calt,+liga},ItalicFeatures={RawFeature={+cv04,+clig,+swsh,+calt,+liga,+hlig,+ss05},CharacterVariant=5:0}]{EB Garamond}
+% \setCJKfamilyfont{FZNewKai-Z03}
+
+\usepackage{xcolor}
+    \definecolor{gl}{RGB}{0,68,124} % 钢蓝, 短语/例句的颜色
+    \definecolor{zs}{RGB}{174,13,22} % 棕色, 扩展的颜色
+
+\usepackage{tcolorbox}
+    \tcbuselibrary{breakable, skins} %使用它的 breakable
+\usepackage{multicol}%分栏
+    \setlength{\columnsep}{1cm}
+\usepackage{imakeidx}
+    \makeindex[title=单词表, options=-s zimu.ist]
+    \makeindex[name=prefix, title=前缀, options=-s zimu.ist]
+    \makeindex[name=suffix, title=后缀, options=-s zimu.ist]
+    \makeindex[name=root, title=词根, options=-s zimu.ist]
+    \makeindex[name=tubiao, title=补充内容]
+    \indexsetup{noclearpage}
+    \usepackage{idxlayout}
+    \idxlayout{columns=4, rule=0.6pt} %索引分4栏
+    \usepackage[hidelinks]{hyperref}
+
+% % suffix and perfix
+% \newtcolorbox{qianzhuihezi}{%定义前缀盒子
+%     colback=black!10,boxrule=0mm,colframe=black!10,
+%     width=\linewidth, %宽度
+%     boxsep=0mm, %文字和框的间距
+%     left=3mm, %文字和左边框的间距
+%     after skip=2mm,
+%     before skip=5mm}
+% \newcommand\zhui[2]{
+%     \begin{qianzhuihezi}
+%     \textbf{#1 #2}
+%     \end{qianzhuihezi}}
+%
+% \newcommand\qz[2]{%前缀
+%     \zhui{#1-\ \index[prefix]{#1}}{#2} \label{#1}}%
+% \newcommand\qzz[3]{%俩前缀
+%     \zhui{#1- = #2-\ \index[prefix]{#1}\index[prefix]{#2}}{#3} \label{#1} \label{#2}}%
+% \newcommand\qzzz[4]{%仨前缀
+%     \zhui{#1- = #2- = #3-\
+%     \index[prefix]{#1}\index[prefix]{#2}\index[prefix]{#3}}{#4}
+%     \label{#1}\label{#2}\label{#3}
+%     }
+% \newcommand\hz[2]{%后缀
+%     \zhui{-#1\ \index[suffix]{#1}}{#2} \label{#1}}%
+% \newcommand\hzz[3]{%俩后缀
+%     \zhui{-#1 = -#2\ \index[suffix]{#1}\index[suffix]{#2}}{#3} \label{#1} \label{#2}}%
+% \newcommand\hzzz[4]{%仨后缀
+%     \zhui{-#1 = -#2 = -#3\
+%     \index[suffix]{#1}\index[suffix]{#2}\index[suffix]{#3}}{#4}
+%     \label{#1}\label{#2}\label{#3}}
+% \renewcommand\r[2]{%词根
+%     \zhui{#1\ \index[root]{#1}}{#2} \label{#1}}%
+% \newcommand\rr[3]{%俩词根
+%     \zhui{#1 = #2\ \index[root]{#1}\index[root]{#2}}{#3} \label{#1} \label{#2}}%
+% \newcommand\rrr[4]{%仨词根
+%     \zhui{#1 = #2 = #3\
+%     \index[root]{#1}\index[root]{#2}\index[root]{#3}}{#4}
+%     \label{#1}\label{#2}\label{#3}}
+
+\renewcommand\c[1]{%单词
+    \par\noindent\textbf{#1}\ \index{#1}}
+\newcommand\cc[1]{%二级单词
+    \par \setlength\parindent{1em}%
+    \hangindent 1em%
+    \textbf{#1}\ \index{#1}}
+\newcommand\ccc[1]{%三级单词
+    \par \setlength\parindent{2em}%
+    \hangindent 2em%
+    \textbf{#1}\ \index{#1}}
+\newcommand\dy[1]{\ \ {\color{gl}\slshape{#1}}}%短语
+
+\usepackage{enumitem}
+%\usepackage{amsmath} %input black square
+\usepackage{setspace}
+\newcommand\tb[2]{%图表盒子
+%    \setlength{\leftmargin}{0mm} %左边界
+%    \setlength{\parsep}{0ex} %段落间距
+%    \setlength{\topsep}{1ex} %列表到上下文的垂直距离
+%    \setlength{\itemsep}{0mm} %条目间距
+%    \setlength{\labelsep}{0.3em} %标号和列表项之间的距离,默认0.5em
+%    \setlength{\itemindent}{0.2em} %标签缩进量
+%    \setlength{\listparindent}{0em} %段落缩进量
+    \textsl{
+    \begin{spacing}{1.2} %段落中的行距
+    {\color{zs} %\enlargethispage{1mm}
+    \vskip 2mm \hrule \vskip 2mm
+    \noindent \small
+    \rule{0.7em}{0.7em} \textbf{#1}\index[tubiao]{#1}%标题
+        \begin{enumerate}[leftmargin=*,itemsep=-2pt,topsep=0mm]
+            %\setlength{\itemsep}{0pt}
+            \CJKfamily{fzfs} #2
+        \end{enumerate}
+    \vskip 2mm \hrule \vskip 3mm
+    \normalfont \normalsize}
+    \end{spacing}
+    }%斜体的括号
+    }
+\newcommand\tbw[2]{ %图表，里面是文字，不是列表
+    \begin{spacing}{1.2} %段落中的行距
+    {\color{zs} %\enlargethispage{1mm}
+    \vskip 2mm \hrule \vskip 2mm
+    \noindent \small
+    \rule{0.7em}{0.7em} \textbf{#1}\index[tubiao]{#1}%标题
+    % \textsl
+    {\CJKfamily{fzfs}
+        \\ #2}
+    \vskip 2mm \hrule \vskip 3mm
+    \normalfont \normalsize}
+    \end{spacing}
+    }
+
+%fc-list -f "%{family}\n" :lang=zh > zhfont.txt
+\setCJKfamilyfont{youyuan}{FZFangSong-Z02}%引入幼圆字体 YouYuan
+\setCJKfamilyfont{fzfs}{FZFangSong-Z02} % 方正仿宋
+\newcommand\jiakuang[1]{\CJKfamily{youyuan}\setlength{\fboxsep}{0.3mm}\fbox{\tiny#1\normalsize}\normalfont
+}%加框
+\newcommand\fk[1]{\jiakuang{#1}}%调用加框, 这一行实际可省略
+
+\newcommand\fangkuangXiaozi[2]{
+    \begin{spacing}{1.1}
+        \vskip 1pt
+        \par\noindent
+        \small\jiakuang{#1} \CJKfamily{fzfs} #2
+        \normalfont\normalsize
+        \vskip 2pt
+    \end{spacing}
+}
+\newcommand\zy[1]{\fangkuangXiaozi{注意}{#1}}
+\newcommand\jf[1]{\fangkuangXiaozi{记法}{#1}}
+\newcommand\zt[1]{\fangkuangXiaozi{真题}{#1}}
+\newcommand\fwb[1]{\fangkuangXiaozi{笔记者注}{#1}}
+
+%词性的格式
+\newcommand\pos[1]{ {\itshape#1}.}
+\renewcommand {\a}   {\pos{adj}}
+\newcommand   {\ad}  {\pos{adv}}
+\newcommand   {\n}   {\pos{n}}
+\renewcommand {\v}   {\pos{v}}
+\newcommand   {\vi}  {\pos{vi}}
+\newcommand   {\vt}  {\pos{vt}}
+\newcommand   {\vn}  {\pos{vn}}
+\newcommand   {\nv}  {\pos{nv}}
+\renewcommand {\int} {\pos{int}}
+\newcommand   {\prep}{\pos{prep}}
+\newcommand   {\pl}  {\pos{pl}}
+
+% \tolerance=1 %下面几行是防止换行
+% %\emergencystretch=\maxdimen
+% \hyphenpenalty=10000
+% \hbadness=10000
+\usepackage[none]{hyphenat}
+
+\renewcommand\sl{$\cdots$ }%省略
+\newcommand\ty{$\sim$ }%同义词，后面不接任何东西，所以要有空格
+\newcommand\tyc{$\sim$}%同义词，由于是词语，后面接 s、ed 等
+
+% \usepackage{fancyhdr}
+% \pagestyle{fancy}
+% % \lhead{}
+% % \chead{}
+% % bfseries
+% \chead{\fangsong\small 笔记排版 / 范文斌 (178-6567-1650)}
+% % \lfoot{From: K. Grant}
+% \cfoot{}
+% \fancyfoot[LE,RO]{\thepage}
+% \fancyfoot[LO,RE]{\fangsong\small 仅供参考学习，切勿挪作他用，版权归属新东方}
+% \renewcommand{\headrulewidth}{0pt}
+
+\usepackage{draftwatermark}
+\SetWatermarkText{\textbf{仅供参考}}
+\SetWatermarkColor[gray]{0.98}
+
+\newcounter{timu}%题目
+\setcounter{timu}{1}
+\newcommand\ti[2]{
+    \begin{tcolorbox}[%
+        colback=black!3!white, colframe=black!3!white,         boxrule=1pt, breakable, enhanced jigsaw]
+    \textsf{\textbf{\arabic{timu}.}} (\fangsong#1\normalfont) #2
+    \end{tcolorbox}\stepcounter{timu}
+}
+\newcommand\hh{\underline{\hbox to 10mm{}} }
+
+
+%                    *********************
+%                     **** 四项选择题 ****
+%                    *********************
+%      用法: \choice{ }{ }{ }{ }
+\usepackage{ifthen}
+\usepackage{array}
+\newcommand\abcdsty[1]{#1.} % style of ABCD label
+\newcommand{\fourch}[4]{%~\hfill(\qquad)\\
+\begin{tabular}{*{4}{@{}p{0.25\textwidth}}}\abcdsty{A}~#1 & \abcdsty{B}~#2 & \abcdsty{C}~#3 & \abcdsty{D}~#4\end{tabular}}
+\newcommand{\twoch}[4]{%~\hfill(\qquad)\\
+\begin{tabular}{*{2}{@{}p{0.5\textwidth}}}\abcdsty{A}~#1 & \abcdsty{B}~#2\end{tabular}\\\begin{tabular}{*{2}{@{}p{0.5\textwidth}}}\abcdsty{C}~#3 & \abcdsty{D}~#4\end{tabular}}
+\newcommand{\onech}[4]{%~\hfill(\qquad)\\
+\abcdsty{A}~#1 \\ \abcdsty{B}~#2 \\ \abcdsty{C}~#3 \\ \abcdsty{D}~#4}
+
+\newlength\widthcha
+\newlength\widthchb
+\newlength\widthchc
+\newlength\widthchd
+\newlength\widthch
+\newlength\tabmaxwidth
+\newlength\fourthtabwidth
+\newlength\halftabwidth
+
+\newcommand{\choice}[4]{\\
+    \setlength\tabmaxwidth{1\textwidth}
+    \setlength\fourthtabwidth{0.25\textwidth}
+    \setlength\halftabwidth{0.5\textwidth}
+    \settowidth\widthcha{AM.#1}
+    \setlength{\widthch}{\widthcha}
+    \settowidth\widthchb{BM.#2}
+    \ifthenelse{\widthch<\widthchb}{\setlength{\widthch}{\widthchb}}{}
+    \settowidth\widthchb{CM.#3}
+    \ifthenelse{\widthch<\widthchb}{\setlength{\widthch}{\widthchb}}{}
+    \settowidth\widthchb{DM.#4}
+    \ifthenelse{\widthch<\widthchb}{\setlength{\widthch}{\widthchb}}{}
+    \ifthenelse{\widthch<\fourthtabwidth}{\fourch{#1}{#2}{#3}{#4}}
+    {\ifthenelse{\widthch<\halftabwidth\and\widthch>\fourthtabwidth}
+    {\twoch{#1}{#2}{#3}{#4}}
+    {\onech{#1}{#2}{#3}{#4}}}
+}
+
+\begin{document}
+% \begin{titlepage}
+% \hfill
+% {\centering\huge\heiti
+% 新东方托福核心词汇
+% \normalfont\normalsize
+% \\
+% \kaiti\large
+% 主讲 /
+% \\
+% 笔记排版 / 范文斌 (178-6567-1650)}
+% \vspace{3cm}\normalfont\normalsize
+% \end{titlepage}
+% \tableofcontents
+\begin{multicols}{2}
+\ti{人大2001}{And the topic of ``fat'' is forbidden. Even the slightest paunch betrays that one is losing
+the trim and \hh of youth.
+\choice{vague}{vigor}{vogue}{vulgar}}
+\c{forbid} \yb{f@"bId} \vt 禁止；阻止；阻碍；妨碍
+\cc{ban} \yb{b\ae n} \vt 禁止，下令禁止；剥夺权利 \n 禁止，禁令；谴责；诅咒，诅骂
+\cc{prohibit} \yb{pr@"hIbIt} \vt 禁止，阻止，防止；不准许
+\c{betray} \yb{bI"treI} \vt 对…不忠；背叛；出卖；泄露
+\c{trim} \yb{trIm} \vt 修剪；整理；装饰 \a 整齐的，整洁的；修长的；苗条的 \n 整齐；修剪；健康状态；装束 \vi 削减
+\c{youth} \yb{ju:T} \n 年轻；青年，小伙子；初期，少年（青年）时期；〈集合词〉青少年们
+\tb{表示``走''的词根词缀}{
+\item vag-，来自 way
+\item -gress，向前
+\item -vade
+\item -cess
+\item -ven = -vent，来自 went，go 的过去式
+}
+\c{vague} \yb{veIg} \a 模糊的；（思想上）不清楚的；（表达或感知）含糊的；暧昧的
+\cc{vaguely} \yb{"veIgli} \ad 含糊地；茫然地；暧昧的
+\c{progress} \yb{"pr@Ugres} \n 进步；前进；[生物学]进化；（向更高方向）增长 \v （使）进步，（使）进行；发展；促进 \vi 发展；（向更高方向）增进
+\c{aggress} \yb{@"gres} \v 攻击，侵犯
+\jf{a- 表示加强}
+\cc{aggressive} \yb{@"gresIv} \a 侵略的，侵犯的，攻势的；（美）有进取心的，积极行动的；有进取心的，有闯劲的；好争斗的，借故生端的，爱打架的，要打架的
+\zy{由上下文判断 aggressive 的含义}
+\c{invade} \yb{In"veId} \v 侵入，侵略；进行侵略；蜂拥而入，挤满；（疾病，声音等）袭来，侵袭 \vt 涌入；侵袭；侵犯；干扰
+\cc{invasion} \yb{In"veIZn} \n 入侵，侵略；侵害，侵犯；侵袭
+\cc{evade} \yb{I"veId} \vt 逃避，躲避；避开；规避；逃脱 \vi 逃避；规避；逃脱
+\jf{e- 出去，ex- = ec- = es- = epi- 向外}
+\jf{epi- 可表示上、中、下}
+\cc{inevitable} \yb{In"evIt@bl} \a 不可避免的；必然发生的；<非正>总会发生的；必然发生的事
+\zy{元音 a、e、i、o、u 的作用是非常不重要的，仅用于辅助发音。如 evade 替换元音变为 inevitable 中的 -evit-}
+\zy{辅音替换，类比通假字，如 t-d、p-b、k-g、f-v}
+\c{process} \yb{"pr@Uses} \n 过程；工序；做事方法；工艺流程 \yb{pr@U"ses} \vt 加工；处理；审阅；审核 \vi 列队行进
+\c{proceed} \yb{pr@"si:d} \vi 进行；前进；（沿特定路线）行进；（尤指打断后）继续说 \n 收入，获利
+\zy{听不出来单词的原因是发音不对}
+\c{excess} \yb{Ik"ses} \n 超过；超额量；多余量；放肆 \yb{"ekses} \a 超重的，过量的，额外的
+\c{exceed} \yb{Ik"si:d} \vt 超过；超越；胜过；越过…的界限 \vi 突出，领先
+\zy{80\% 的单词会认，20\% 会写，如翻译、写作中}
+\c{avenue} \yb{"\ae v@nju:} \n 林荫路；大街；途径，手段；〈美〉（南北向）街道
+\c{venture} \yb{"ventS@} \n 冒险事业；冒险；冒险行动；商业冒险 \vt 冒…的危险；拿…冒险；用…进行投机；以…做赌注 \vi 冒险前进，冒险行事；猜测（常与at连用）
+\c{adventure} \yb{@d"ventS@} \n 冒险活动；冒险经历；奇遇
+\c{vigor} \yb{"vIg@} \n 活力；智力；（语言等的）气势；（动，植物的）强健
+\jf{vi- 表示看、生命，生命的意思来自法语 vie}
+\c{vision} \yb{"vIZn} \n 视力，视觉；想象；幻象；想象力
+\c{view} \yb{vju:} \n 看法；风景；视域 \vt 看；看待
+\c{witness} \yb{"wItn@s} \n 目击者，见证人；[法]证人；证据 \vt 出席或知道；作记录；提供或作为…的证据；（年份）见证 \vi 做证人；见证
+\c{evident} \yb{"evId@nt} \a 明显的，明白的；昭著
+\cc{evidence} \yb{"evId@ns} \n 证词；证据；迹象；明显 \vt 使明显；显示；表明；证实
+\c{vivid} \yb{"vIvId} \a 生动的；（记忆、描述等）清晰的；（人的想像）丰富的；（光、颜色等）鲜艳的，耀眼的
+\c{virus} \yb{"vaIr@s} \n 病毒；病毒性疾病；毒素，毒害；[计算机科学]计算机病毒
+\c{vital} \yb{"vaItl} \a 维持生命所必需的；至关重要的；生死攸关的；生机勃勃的
+\zy{可在写作中替换 important}
+\cc{fatal} \yb{"feItl} \a 致命的，攸关的；毁灭性的，严重的；命中注定的；重大的
+\c{fate} \yb{feIt} \n 命运；天意；命中注定的事（尤指坏事）
+\c{vibrate} \yb{vaI"breIt} \v （使）振动[颤动]；摆动；犹豫；激动
+\zy{-ate 动词结尾}
+\cc{vibration} \yb{vaI"breISn} \n 摆动；震动；感受；（偏离平衡位置的）一次性往复振动
+\cc{mode} \yb{m@Ud} \n 方式；状况；时尚，风尚；调式；模式
+\c{vogue} \yb{v@Ug} \n 时尚，流行；时髦的事物 \a 流行的，时髦的
+\c{folk} \yb{f@Uk} \n 民族；人们；〈口〉家属，亲戚；民间音乐 \a 民间的；普通平民的；流传民间的；普通百姓的 \dy{Volks Wagon 大众汽车}
+\zy{volk、folk 相互替换}
+\cc{volk} \yb{fO:lk} \n 民族人民
+
+\ti{人大2001}{All specialists agree that the most important consideration with diet drugs is carefully
+\hh the risks benefits.
+\choice{valuing}{evaluating}{estimating}{weighing}}
+\c{benefit} \yb{"benIfIt} \n 利益，好处；救济金，津贴；义演，义卖；恩惠，恩泽 \vt 有益于，有助于；使受益；得益，受益
+\jf{bene- 好}
+\cc{profit} \yb{"pr6fIt} \n 收益，得益；利润；红利；净值利润率 \vt 有益于…，对…有益的；得益；创利润 \vi 有益；获利
+\cc{benediction} \yb{""benI"dIkSn} \n 祝福；（礼拜结束时的）赐福祈祷；恩赐；（大写）（罗马天主教）祈求上帝赐福的仪式
+\jf{dict- 说，措辞、用语}
+\c{value} \yb{"v\ae lju:} \n 价值，价格；意义，涵义；重要性；（邮票的）面值 \vt 评价；重视，看重；估价，给…定价
+\cc{estimate} \yb{"estIm@t} \n 估计，预测；报价，预算书；评价，判断 \vt 估计，估算；评价，评论；估量，估价 \dy{\ty the value}
+\cc{valuable} \yb{"v\ae lju@bl} \a 贵重的，宝贵的；有价值的；可评估的 \n 贵重物品，财宝
+\cc{invaluable} \yb{In"v\ae lju@bl} \a 非常宝贵的；无法估计的；无价的；金不换
+\cc{unvalued} \yb{"2n"v\ae lju:d} \a 不受重视的；无价值的；不足道的；未评价过的
+\cc{evaluate} \yb{I"v\ae ljueIt} \vt 评价；求…的值（或数）；对…评价；[数学、逻辑学]求…的数值 \vi 评价，估价
+\jf{e- 外，-val- 说，说出来}
+\c{equivalent} \yb{I"kwIv@l@nt} \a 相等的，相当的，等效的；等价的，等积的；[化学]当量的 \n 对等物；[化学]当量
+\jf{equ- 相等，-val- 价值，等价的}
+\cc{equal} \yb{"i:kw@l} \a 相等的，平等的；平稳的；势均力敌的；胜任的 \vt 等于；比得上；使相等；同样看待 \n 同样的人；相等的数量；能与之比拟的东西；（地位、实力等）相同的人 \vi 相等，相平（与out连用） \dy{be \ty to}
+\cc{equation} \yb{I"kweIZn} \n 方程式；等式；相等；[化学] 反应式
+\cc{equator} \yb{I"kweIt@} \n 赤道；（平分球形物体的面的）圆；（任何）大圆
+\c{valid} \yb{"v\ae lId} \a 有效的；有法律效力的；正当的；健全的
+\jf{有效 = 有价值}
+\cc{invalid} \yb{In"v\ae lId} \a 无效的；不能成立的；有病的；病人用的 \vt 使伤残；使退役；失去健康 \n 病人，病号；残废者；伤病军人 \vi 变得病弱；因病而奉命退役
+\cc{available} \yb{@"veIl@bl} \a 可获得的；有空的；可购得的；能找到的
+\c{weigh} \yb{weI} \vt 称…的重量；权衡，考虑；用手掂估；使吃重 \vi 具有重要性；重量为；起锚；成为…的重荷 \n 权衡；称重量 \dy{\ty A against B 权衡A和B}
+\c{weight} \yb{weIt} \n 重量，体重；重担，重任；重要；[统]权，加重值，权重 \vt 加重于，使变重；使负重，使负担或压迫；[统]使加权，附加权重值于
+
+\ti{人大2001}{Chinese often shake my hand and don’t let go. They talk away contentedly, \hh of my
+discomfort and struggle to disengage my hand.
+\choice{oblivious}{patent}{obvious}{pernicious}}
+\c{contentedly} \yb{k@n"tentIdlI} \ad 满足地，安心地
+\c{struggle} \yb{"str2gl} \vi 搏斗；奋斗；努力；争取 \n 打斗；竞争；奋斗
+\c{oblivious} \yb{@"blIvi@s} \a 忘却的；健忘的；不注意的；不知道的
+\jf{ob- 加强或否定，这里是否定，-liv- 是 live}
+\c{patent} \yb{"p\ae tnt , "peItnt} \n 专利；专利品；专利权；专利证 \a 专利的；显然，显露；明摆着的 \vt 获得…专利，给予…专利权；取得专利权 \dy{\ty emphasis that something bad is obvious. }
+\c{obvious} \yb{"6bvi@s} \a 明显的；显著的；平淡无奇的；自明
+\cc{evident} \yb{"evId@nt} \a 明显的，明白的；昭著；彰
+\c{pernicious} \yb{p@"nIS@s} \a 很有害的，恶性的，致命的，险恶的；引起巨大伤害的；毁灭性的
+\cc{noxious} \yb{"n6kS@s} \a 有害的，有毒的
+
+\ti{人大2001}{The word “foolish” is too mild to describe your behavior, I would prefer the word \hh.
+\choice{ideological}{idyllic}{idiotic}{idiomatic}}
+\zy{填一个更加 foolish 的词}
+\c{foolish} \yb{"fu:lIS} \a 愚蠢的；鲁莽的；荒谬的，可笑的；混
+\c{ideological} \yb{""aIdI@"l6dZIkl} \a 思想的；意识形态的
+\cc{ideology} \yb{""aIdi"6l@dZi} \n 思想（体系），思想意识；意识形态；观念学；空想，空论
+\c{idyllic} \yb{I"dIlIk} \a 田园诗般的；牧歌的；质朴宜人的；平和欢畅的 \dy{\ty is a short poem that describe peaceful life. }
+\c{idiotic} \yb{""Idi"6tIk} \a 白痴的；憨痴；呆头呆脑；憨头憨脑
+\c{idiomatic} \yb{""Idi@"m\ae tIk} \a 符合语言习惯的，成语的；含有习语的 \ad 符合语言习惯地 \n 符合语言习惯
+\cc{idiom} \yb{"Idi@m} \n 习语，成语；方言，土语；（语言）风格；惯用语法 \dy{\ty means that a group of words whose meaning is different from individual word. }
+
+\ti{人大2001}{Because of its excellence in quality, for the last two years, Audi car has \hh Germany’s
+Touring Car Championship.
+\choice{conquered}{contested}{dominated}{determined}}
+\c{tour} \yb{tU@} \n 旅行，观光；巡回演出；任职期；轮班 \vt 到…旅游；在…巡回演出 \vi 观光；巡回
+\c{excellence} \yb{"eks@l@ns} \n 优秀，卓越；优点；美德
+\c{conquer} \yb{"k6Nk@} \vt 征服；攻克；打败（敌人）；克服 \vi 得胜，胜利 \dy{I came, I saw, I \tyc ed. }
+\c{contest} \yb{"k6ntest} \vt 竞争，为…而奋争；辩驳 \vi 争斗；竞争；争夺 \n 比赛；竞赛；搏斗
+\jf{con- 一起，一起考试即竞争}
+\c{dominate} \yb{"d6mIneIt} \v 支配，影响；占有优势；在…中具有最重要的特色；在…中拥有最重要的位置
+\cc{dome} \yb{d@Um} \n 圆屋顶；像圆屋顶一样的东西；圆顶体育场 \vt 加圆屋顶于…上 \vi 成圆顶状
+\jf{dome- 家，来自 home}
+\cc{domestic} \yb{d@"mestIk} \a 家庭的，家的；国内的；驯养的；热心家务的 \n 佣人；国货 \dy{gross \ty product 国内生产总值}
+\cc{domesticate} \yb{d@"mestIkeIt} \vt 驯养；使爱家；适应家庭生活；引进
+\cc{domicile} \yb{"d6mIsaIl} \n 住处；永久住处 \vt 定居
+\c{determine} \yb{dI"t3:mIn} \v （使）下决心，（使）做出决定 \vt 决定，确定；判定，判决；使决定；限定 \vi [主用于法律]了结，终止，结束
+\cc{determination} \yb{dI""t3:mI"neISn} \n 决心；决定，确定；[物]测定，计算
+
+\ti{人大2001}{What we consider a luxury at one time frequently becomes a \hh, many families find
+that ownership of two cars is indispensable.
+\choice{fashion}{necessity}{proclivity}{nuisance}}
+\zy{填 luxury 的反义词}
+\c{luxury} \yb{"l2kS@ri} \n 奢侈，豪华；奢侈品，美食，美衣；乐趣，享受；不常有的乐趣（或享受、优势） \a 奢华的，豪华的
+\c{proclivity} \yb{pr@"klIv@ti} \n 倾向，癖性
+\c{nuisance} \yb{"nju:sns} \n 讨厌的东西（人，行为）麻烦事；非法妨害，损害；麻烦事
+
+\ti{人大2001}{The chief editor thought he took some liberties with the original in translation. So it
+was necessary that he make the \hh suggested.
+\choice{alterations}{alternatives}{alternations}{altercations}}
+\c{liberty} \yb{"lIb@ti} \n 自由；许可权；放肆，无礼；解放，释放
+\jf{来自 labor}
+\cc{labor} \yb{"leIb@} \n 劳动；努力；工作；劳工 \v 努力争取(for)；苦干；详细分析 \a 劳工的，工会的；（常大写）（英国或英联邦国家）工党的 \vi （指引擎）缓慢而困难地运转
+\cc{collaborative} \yb{k@"l\ae b@r@tIv} \a 合作的；协作的
+\jf{col- = con- = com- 一起，-labor- 劳动，即合作}
+\cc{cooperative} \yb{k@U"6p@r@tIv} \a 合作的；协助的；共同的；〈美〉（大学文科）有关[包含]各种实习活动的 \n 合作社，联合体
+\cc{operate} \yb{"6p@reIt} \v 运转；操作；经营；管理 \vi 开刀；（对…）动手术；动手术；（在某地）采取军事行动 \vt 操作，控制，使运行
+\cc{operation} \yb{""6p@"reISn} \n 操作，经营；手术
+\cc{liberal} \yb{"lIb@r@l} \n 自由主义者；自由党党员 \a 开明的；自由的；慷慨的；不拘泥的
+\c{original} \yb{@"rIdZ@nl} \a 原始的；独创的；最初的；新颖的 \n 原文；原型；原件；怪人
+\cc{orient} \yb{"O:rient} \vt 标定方向；使…向东方；以…为参照；使熟悉或适应 \vi 转向东方；使调整或者成为一条直线 \n 东方；亚洲，亚洲各国
+\cc{oriental} \yb{""O:ri"entl} \a （抽象的）东方的；东方人的；东方文化的；优质的 \n 东方人；东亚人
+\cc{origin} \yb{"6rIdZIn} \n 起源，根源；出身；[数]原点，起点；[解]（筋，神经的）起端
+\cc{originate} \yb{@"rIdZIneIt} \vt 引起；创始，创作；开始，发生；发明 \vi 起源于，来自；产生；起航
+\c{suggest} \yb{s@"dZest} \vt 建议，提议；暗示；使想起；启示
+\c{alteration} \yb{""O:lt@"reISn} \n 变化，改变；变更
+\cc{alter} \yb{"O:lt@} \vt 改变；更改；改建（房屋）；（人）变老 \vi 改变；修改
+\c{alternative} \yb{O:l"t3:n@tIv} \a 替代的；备选的；其他的；另类的 \n 可供选择的事物；二选一的
+\cc{alternate} \yb{O:l"t3:n@t} \a 轮流的；交替的；间隔的；代替的 \vi 交替；轮流 \vt 使交替；使轮流 \n 〈美〉（委员）代理人；候补者；替换物 \dy{That was a week of \ty rain and sunshine. 那是晴雨交替的一周。}
+\c{altercation} \yb{""O:lt@"keISn} \n 争辩，争吵
+\cc{altercate} \yb{"O:lt@keIt} \v 争论，口角
+
+\ti{人大2001}{Many well-educated people don’t believe that \hh will endanger freedom of speech.
+\choice{cencership}{censureship}{sensorship}{censorship}}
+\c{censorship} \yb{"sens@SIp} \n 审查制度；审查机构；审察员的职权；[心]潜意识中的抑制力
+\c{censor} \yb{"sens@} \n 监察官，检查员 \vt 审查，检查；审查（书刊等）；检查（信件等）；删改 \dy{A person whose job is to examine the parts of the movie or the book that considered to be very offensive or immoral. }
+\cc{offensive} \yb{@"fensIv} \a 无礼的，冒犯的，唐突的；讨厌的，令人不快的；进攻（性）的，攻击的，攻势的 \n 进攻，攻势
+\cc{immoral} \yb{I"m6r@l} \a 不道德的；邪恶的；猥亵的；悖德
+\cc{censorious} \yb{sen"sO:ri@s} \a 苛评的，吹毛求疵的
+\cc{censure} \yb{"senS@} \n 指责，谴责；责备；斥责 \vt 指责；谴责；责备；批评 \vi 谴责，责备 \dy{strong criticism | \ty sb. for sth. }
+
+\ti{人大2001}{The \hh of “snake” is simply this: a legless reptile with a long, thin body.
+\choice{connotation}{denomination}{donation}{denotation}}
+\zy{这里填``描述''意思的词，共同部分是 -note-}
+\c{note} \yb{n@Ut} \n 笔记；便笺；音符；钞票 \vt 注意；记录；对…加注释；指出
+\cc{notable} \yb{"n@Ut@bl} \a 值得注意的；显著的；著名的 \n 名人；显要人物
+\cc{outstanding} \yb{aUt"st\ae ndIN} \a 杰出的；显著的；凸出的；未完成的
+\cc{exceptional} \yb{Ik"sepS@nl} \a 优越的；杰出的；例外的；独特的 \n 超常的学生
+\cc{excellent} \yb{"eks@l@nt} \a 卓越的；杰出的；优秀的；太好了
+\cc{extraordinary} \yb{Ik"strO:dnri} \a 非凡的；特别的；非常奇特的
+\cc{extra} \yb{"ekstr@} \a 额外的，补充的，附加的；特大的，特别的 \n 附加物，额外的事物；临时演员；号外；上等产品，上品 \ad 额外地；格外地，特别地 \dy{Extra 益达口香糖 | extra large (XL) 超大号}
+\cc{ordinary} \yb{"O:dnri} \a 普通的；平常的；一般的；平庸的
+\cc{brilliant} \yb{"brIli@nt} \a 明亮的；<非正式>美好的；闪耀的；才华横溢的 \n 宝石；钻石
+\cc{remarkable} \yb{rI"mA:k@bl} \a 异常的，引人注目的，；卓越的；显著的；非凡的，非常（好）的
+\jf{re- 反复，-mark- 标记}
+\c{distinguish} \yb{dI"stINgwIS} \vi 区分，辨别，分清；辨别是非 \vt 区分，辨别，分清；辨别出，识别；引人注目，有别于；使杰出，使著名
+\cc{distinguished} \yb{dI"stINgwISt} \a 卓越的；著名的；受人尊敬的；显得重要的
+\c{denotation} \yb{""di:n@U"teISn} \n 指称意义
+\cc{denote} \yb{dI"n@Ut} \vt 指代；预示；代表；意思是
+\c{connotation} \yb{""k6n@"teISn} \n 内涵，含义；言外之意
+\c{denomination} \yb{dI""n6mI"neISn} \n 宗派；教派；（钱的）面额
+\jf{nom- 是 name}
+\c{donation} \yb{d@U"neISn} \n 捐赠，赠送；捐款；捐赠物
+\jf{don- 给予}
+\cc{Pandora} \yb{p\ae n"dO:r@} \n 潘多拉 \dy{\tyc 's box 潘多拉魔盒}
+\jf{pan- 全部，-do- = don 给予}
+\cc{donate} \yb{d@U"neIt} \v （尤指向慈善机构）捐赠；献（血）；捐（血）；捐献（器官） \n 捐赠；捐献
+\cc{condone} \yb{k@n"d@Un} \vt 容忍，宽恕，原谅 \dy{If someone slaps you on one cheek, turn to them the other also. If someone takes your coat, do not withhold your shirt from them. (Luke 6:29) 有人打你这边的脸，连那边的脸也由他打。有人夺你的外衣，连里衣也由他拿去。(《圣经》路 6:29)}
+\cc{dote} \yb{d@Ut} \vi 溺爱，宠爱，过分地喜爱
+\c{snake} \yb{sneIk} \n 蛇；奸险的人；卑劣的人；蛇形浮动汇率制 \vt 沿…曲折前进（或延伸） \vi 曲折前进（或延伸）；蛇行，悄悄地爬行
+\jf{据说蛇曾经受到上帝的惩罚，剥夺了皮毛和四肢，只剩光溜溜的一条，名字便是由 naked 的演化而来}
+\cc{naked} \yb{"neIkId} \a 裸体的，裸露的；率直的，赤裸裸的；缺乏保护；不加掩饰的
+
+\ti{人大2001}{When the opposing player fouled John, he let his anger \hh his good sense and hit
+the body back.
+\choice{got the feel of}{got the hang of}{got the better of}{got the worst of}}
+\zy{选项的意思分别是习惯、熟悉、占上风、占下风}
+\c{player} \yb{"pleI@} \n 演员；[体]运动员；[音]演奏者；播放机
+\c{oppose} \yb{@"p@Uz} \v 反对，抗争；使相对；使对照；抵制
+\zy{op- = ob- 加强或反对}
+\cc{pose} \yb{p@Uz} \v 使摆姿势；以…身份出现；招摇；炫耀 \vt 提出；造成（威胁、问题等）；引起；产生 \n 姿势；姿态；装腔作势；伪装
+\cc{opponent} \yb{@"p@Un@nt} \n 对手；反对者；敌手 \a 对立的；敌对的
+\jf{-ent 表示人}
+\c{foul} \yb{faUl} \a [体]违反规则的，犯规的；邪恶的；难闻的，有恶臭的；下流的 \v 纠缠，纠结；[体]违反规则的 \vt 弄脏，使污秽；使纠缠；使阻塞 \vi 腐烂；缠结 \n 犯规；缠结；碰撞 \ad 不正当地，犯规地；碰撞地；争执不和地
+
+\ti{人大2001}{Although this book claims to be a biography of George Washington, many of the
+incident are \underline{imaginary}.
+\choice{fascinating}{factitious}{fastidious}{fictitious}}
+\c{imaginary} \yb{I"m\ae dZIn@ri} \a 想像中的，假想的，虚构的；[数]虚数的；幻；虚幻
+\c{fascinating} \yb{"f\ae sIneItIN} \a 迷人的，有极大吸引力的；使人神魂颠倒的 \v 使…陶醉(fascinate的ing形式)
+\cc{fascinate} \yb{"f\ae sIneIt} \vt 使着迷；使神魂颠倒；蛊惑 \vi 入迷
+\cc{fascist} \yb{"f\ae SIst} \n 法西斯主义者；法西斯分子 \a 法西斯主义的；法西斯主义者的；法西斯党的
+\jf{法西斯主义是束缚人的思想}
+\c{factitious} \yb{f\ae k"tIS@s} \a 不自然的；虚假的；人为的；人造的
+\jf{fac- = fec- = fic- 做，如 fact、factory 做事情的地方}
+\zy{cat 猫，c- 是手的象形，-t 表示钩，插入元音 -a- 使得单词可发音}
+\cc{fiction} \yb{"fIkSn} \n 小说，虚构的文学作品；虚构的或想像出的事，并非完全真实的事；编造，虚构
+\jf{fiction，非常神，小说}
+\c{fastidious} \yb{f\ae "stIdi@s} \a 挑剔的；讲究的；苛求的；（微生物等）需要复杂营养的
+\cc{fuss} \yb{f2s} \n 忙乱；大惊小怪；大惊小怪的人；争吵 \vi 忙乱；大惊小怪；抱怨 \vt 使烦恼，使烦忧；使急躁 \v 瞎忙一气，过分关心
+\jf{fuss 发丝，对象身上的头发}
+\c{fictitious} \yb{fIk"tIS@s} \a 虚构的，编造的；假定的，虚设的；小说式的；假装的
+\c{claim} \yb{kleIm} \vt 声称；断言；需要；索取 \vi 提出要求 \n （根据权利而提出的）要求；声称；断言；索赔 \dy{baggage \ty 行李提取处}
+\zy{claim 缩写自 call，第一、三个字母，比如中文里``红色警戒''简称``红警''，没有人叫它``色戒''}
+\cc{proclaim} \yb{pr@"kleIm} \vt 宣告，公布；表明；赞扬，称颂
+\zy{pro- 向前，来自希腊神仙 Prometheus 普罗米修斯的名字}
+\cc{exclaim} \yb{Ik"skleIm} \v 呼喊；惊叫；大声说
+\cc{acclaim} \yb{@"kleIm} \n 赞扬；欢呼；欢迎 \v 拥护；喝彩；称誉
+\c{reclaim} \yb{rI"kleIm} \vt 开拓，开垦；感化；取回；沙化；回收再利用；改造某人，使某人悔改 \vi.  抗议，喊叫 \n.  改造，感化；再生胶
+\cc{declaim} \yb{dI"kleIm} \v （像演讲般）说话 \vi 抨击；（在公共场合）大声抗议
+
+\ti{人大2001}{The trade of designed to facilitate further cooperation between Chinese auto
+industries and overseas auto industries.
+\choice{promote}{protect}{preserve}{prolong}}
+\ti{人大2001}{He was concerned only with mundane matters, especially the daily stock market
+quotations.
+\choice{rational}{obscure}{worldly}{eminent}}
+\ti{人大2001}{The earthquake that occurred in India this year was a major calamity in which a great
+many lives were lost.
+\choice{casualty}{catastrophe}{catalogue}{crusade}}
+\ti{人大2001}{The doctors were worried because the patient did not recuperate as rapidly as they
+had expected.
+\choice{withdraw}{emerge}{recover}{uncover}}
+\ti{人大2001}{The purchaser of this lorry is protected by the manufacturer’s warranty that he will
+replace any defective part for five years of 50,000 miles.
+\choice{prohibition}{insurance}{prophecy}{guarantee}}
+\ti{人大2001}{The body could not reconcile himself to the failure, he did not believe that was his lot.
+\choice{submit}{commit}{transmit}{permit}}
+\ti{人大2001}{In some cities of North China, the noise pollution is as pronounced as that in Tokyo.
+\choice{contemptuous}{contagious}{conspicuous}{contemplated}}
+\ti{人大2001}{Trivial breaches of regulations we can pass over, but more serious ones will have to
+be investigated.
+\choice{exceed}{wither}{overpass}{neglect}}
+\ti{人大2001}{ We were discussing the housing problem when a middle-aged man cut in and said,
+“There’s no point in talking about impossibilities”.
+\choice{intersect}{interject}{penetrate}{adulterate}}
+
+
+
+\end{multicols}
+
+
+\printindex
+% \printindex[prefix]
+% \printindex[suffix]
+% \printindex[root]
+% \printindex[tubiao]
+\end{document}
