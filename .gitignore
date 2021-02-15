@@ -1,5 +1,6 @@
 *.pdf
 *.gz
+*.bat
 
 ## Core latex/pdflatex auxiliary files:
 *.aux

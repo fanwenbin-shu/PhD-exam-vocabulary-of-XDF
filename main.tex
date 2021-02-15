@@ -1,6 +1,6 @@
 % !TEX program = xelatex
 % !TEX encoding = UTF-8
-\documentclass[a4paper]{book}
+\documentclass[a4paper]{article}
 
 % % Greek font
 % \usepackage[T2A,T1]{fontenc}
@@ -23,7 +23,8 @@
 % Page Margin
 \usepackage[% inner = 1in, outer = 1.5in % for my default book
     inner=1in,
-    outer=1.5in,
+    % outer=1.5in,
+    outer=1in,
     bottom=1.5in,
 ]{geometry}
 
@@ -50,16 +51,20 @@
     \setlength{\columnsep}{1cm}
 \usepackage{imakeidx}
     \makeindex[title=单词表, options=-s zimu.ist]
-    \makeindex[name=prefix, title=前缀, options=-s zimu.ist]
-    \makeindex[name=suffix, title=后缀, options=-s zimu.ist]
+    % \makeindex[name=prefix, title=前缀, options=-s zimu.ist]
+    % \makeindex[name=suffix, title=后缀, options=-s zimu.ist]
     \makeindex[name=root, title=词根, options=-s zimu.ist]
     \makeindex[name=tubiao, title=补充内容]
     \indexsetup{noclearpage}
     \usepackage{idxlayout}
-    \idxlayout{columns=4, rule=0.6pt} %索引分4栏
+    \idxlayout{
+        columns=5, rule=0.6pt, columnsep=10pt,
+        font={small}
+        } %索引分4栏
     \usepackage[hidelinks]{hyperref}
 
 % % suffix and perfix
+\newcommand\cg[1]{\textsf{#1}\index[root]{#1}}
 % \newtcolorbox{qianzhuihezi}{%定义前缀盒子
 %     colback=black!10,boxrule=0mm,colframe=black!10,
 %     width=\linewidth, %宽度
@@ -110,19 +115,17 @@
 %     \hangindent 20pt%
 %     \normalsize\normalfont
 %     \textbf{#1}\ \index{#1}\small}
+\newcommand\p[1]{%phrase -> p % 短语
+\par\noindent
+\normalsize\normalfont
+\textbf{#1}\ \small
+}
 \newcommand\dy[1]{\ \ {\color{gl}\slshape{#1}}}%短语
 
 \usepackage{enumitem}
 %\usepackage{amsmath} %input black square
 \usepackage{setspace}
-\newcommand\tb[2]{%图表盒子
-%    \setlength{\leftmargin}{0mm} %左边界
-%    \setlength{\parsep}{0ex} %段落间距
-%    \setlength{\topsep}{1ex} %列表到上下文的垂直距离
-%    \setlength{\itemsep}{0mm} %条目间距
-%    \setlength{\labelsep}{0.3em} %标号和列表项之间的距离,默认0.5em
-%    \setlength{\itemindent}{0.2em} %标签缩进量
-%    \setlength{\listparindent}{0em} %段落缩进量
+\newcommand\tbw[2]{%图表，里面是文字
     \vskip 2mm
     \begin{spacing}{1.2}
     \noindent \small
@@ -132,27 +135,25 @@
       opacityback=0, opacitybacktitle=0, opacityframe=0,
       sharp corners=all,
       breakable, enhanced jigsaw,
-      title={\rule{0.7em}{0.7em} \textbf{#1}}]
-      \begin{enumerate}[leftmargin=*,itemsep=-2pt,topsep=0mm]
-          %\setlength{\itemsep}{0pt}
+      title={\rule{0.7em}{0.7em} \heiti\textbf{#1}\normalfont}]
           \CJKfamily{fzfs} #2
-      \end{enumerate}
     \end{tcolorbox}
     \end{spacing}
     \index[tubiao]{#1}
     }
-\newcommand\tbw[2]{ %图表，里面是文字，不是列表
-    \begin{spacing}{1.2} %段落中的行距
-    {\color{zs} %\enlargethispage{1mm}
-    \vskip 2mm \hrule \vskip 2mm
-    \noindent \small
-    \rule{0.7em}{0.7em} \textbf{#1}\index[tubiao]{#1}%标题
-    % \textsl
-    {\CJKfamily{fzfs}
-        \\ #2}
-    \vskip 2mm \hrule \vskip 3mm
-    \normalfont \normalsize}
-    \end{spacing}
+% \setlength{\leftmargin}{0mm} %左边界
+% \setlength{\parsep}{0ex} %段落间距
+% \setlength{\topsep}{1ex} %列表到上下文的垂直距离
+% \setlength{\itemsep}{0mm} %条目间距
+% \setlength{\labelsep}{0.3em} %标号和列表项之间的距离,默认0.5em
+% \setlength{\itemindent}{0.2em} %标签缩进量
+% \setlength{\listparindent}{0em} %段落缩进量
+\newcommand\tb[2]{ %图表，里面是列表
+    \tbw{#1}{
+    \begin{enumerate}[leftmargin=*,itemsep=-2pt,topsep=0mm]
+        #2
+    \end{enumerate}
+    }
     }
 
 %fc-list -f "%{family}\n" :lang=zh > zhfont.txt
@@ -215,9 +216,9 @@
 % \fancyfoot[LO,RE]{\fangsong\small 仅供参考学习，切勿挪作他用，版权归属新东方}
 % \renewcommand{\headrulewidth}{0pt}
 
-\usepackage{draftwatermark}
-\SetWatermarkText{\textbf{仅供参考}}
-\SetWatermarkColor[gray]{0.98}
+% \usepackage{draftwatermark}
+% \SetWatermarkText{\textbf{仅供参考}}
+% \SetWatermarkColor[gray]{0.98}
 
 \newcounter{timu}%题目
 \setcounter{timu}{1}
@@ -286,6 +287,22 @@
 \addinputpath{section/}
 \makeatother
 
+% chn-eng parallel
+\newcounter{YHCounter} % ying han counter -> YHCounter
+\usepackage{parallel}
+\newcommand\dz[1]{ % duizhao -> dz
+\setcounter{YHCounter}{1}
+\begin{Parallel}{0.38\textwidth}{0.58\textwidth}
+#1
+\end{Parallel}
+}
+\newcommand\yh[2]{
+\ParallelPar
+\ParallelLText{\noindent\textsf{{\arabic{YHCounter}.}} #1}
+\ParallelRText{\noindent\textsf{{\arabic{YHCounter}.}} #2}
+\stepcounter{YHCounter}
+}
+
 \begin{document}
 % \begin{titlepage}
 % \hfill
@@ -299,16 +316,18 @@
 % 笔记排版 / 范文斌 (178-6567-1650)}
 % \vspace{3cm}\normalfont\normalsize
 % \end{titlepage}
-% \tableofcontents
+\tableofcontents
 
-\chapter{真题}
+% \chapter{真题}
 \input{RUC2001}
 \input{RUC2009}
-
+\input{QS} % 求是英语培训
+\input{FDU2009}
+\input{FDU2010}
 
 \printindex
 % \printindex[prefix]
 % \printindex[suffix]
-% \printindex[root]
+\printindex[root]
 % \printindex[tubiao]
 \end{document}
